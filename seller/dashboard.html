@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard</title>
+    <link rel="stylesheet" href="./../assets/style/seller.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Seller Dashboard</h3>
+                <p id="user-login">Seller Name</p>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="./dashboard.html"><i class="material-icons">dashboard</i> Dashboard</a></li>
+                <li><a href="./profile.html"><i class="material-icons">person</i> Profile</a></li>
+                <li><a href="./product.html"><i class="material-icons">inventory</i> Product</a></li>
+                <li><a href="./category.html"><i class="material-icons">category</i> Category</a></li>
+                <li><a href="#" id="logoutButton"><i class="material-icons">logout</i> Logout</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <nav class="navbar">
+                <h2>Dashboard</h2>
+                <div class="navbar-right">
+                    <a href="#" class="profile"><i class="material-icons">account_circle</i> Seller</a>
+                </div>
+            </nav>
+            <div class="content">
+                <h3>Welcome to the Seller Dashboard</h3>
+                <p>Manage your products, profile, and categories here.</p>
+                <!-- Add your content here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi untuk logout
+        async function logout() {
+            try {
+                const response = await fetch('https://example.com/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include' // Ini penting agar cookie dikirimkan bersama permintaan
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success) {
+                        alert(result.message); // Tampilkan pesan sukses
+                        // Lakukan tindakan setelah logout, seperti mengarahkan pengguna ke halaman login
+                        window.location.href = '/login';
+                    } else {
+                        alert('Logout failed');
+                    }
+                } else {
+                    alert('Logout request failed');
+                }
+            } catch (error) {
+                console.error('Error during logout:', error);
+                alert('An error occurred during logout');
+            }
+        }
+
+        // Memanggil fungsi logout saat tombol diklik
+        document.getElementById('logoutButton').addEventListener('click', function (event) {
+            event.preventDefault(); // Mencegah tindakan default dari anchor tag
+            logout();
+        });
+    </script>
+</body>
+
+</html>

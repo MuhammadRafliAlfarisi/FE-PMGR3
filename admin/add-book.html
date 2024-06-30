@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Category</title>
+    <link rel="stylesheet" href="./../assets/style/admin.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <button class="sidebar-toggle"><i class="material-icons">menu</i></button>
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h3>Admin Dashboard</h3>
+                <p id="user-login"></p>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="./dashboard.html"><i class="material-icons">dashboard</i> Dashboard</a></li>
+                <li><a href="./book.html" class="active"><i class="material-icons">book</i> Book</a></li>
+                <li><a href="./genre.html"><i class="material-icons">movie</i> Genre </a></li>
+                <li><a href="#" id="logoutButton"><i class="material-icons">logout</i> Logout</a></li>
+            </ul>
+        </nav>
+        <div class="main-content">
+            <nav class="navbar">
+                <h2>Add Category</h2>
+                <div class="navbar-right">
+                    <a href="#" class="profile"><i class="material-icons">account_circle</i> User</a>
+                </div>
+            </nav>
+            <div class="content">
+                <div class="add-category-section">
+                    <h3>Add New Book</h3>
+                    <form id="category-form">
+                        <label for="title">title:</label>
+                        <input type="text" id="title" name="title" required>
+                        <label for="genre">Genre:</label>
+                        <select name="id_genre" id="id_genre"></select>
+                        <button type="submit" id="addBtn">Add Book</button>
+                    </form>
+                    <a href="./book.html" class="back-btn">Back to Book Management</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="./../assets/js/add-book.js"></script>
+    <script>
+        const userLogin = document.getElementById("user-login");
+        function parseJwt(token) {
+            try {
+                const base64Url = token.split(".")[1];
+                const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+                const jsonPayload = decodeURIComponent(
+                    atob(base64)
+                        .split("")
+                        .map(function (c) {
+                            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+                        })
+                        .join("")
+                );
+
+                return JSON.parse(jsonPayload);
+            } catch (e) {
+                return {};
+            }
+        }
+
+        // Get the token from cookie (assuming it's already set)
+        const token = document.cookie
+            .split("; ")
+            .find((row) => row.startsWith("token="))
+            .split("=")[1];
+
+        if (token) {
+            const user = parseJwt(token);
+            userLogin.textContent = user.name; // Update with user information, e.g., user.name
+        } else {
+            console.error("Token not found or expired.");
+            // Handle error or redirect to login page
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('https://fly-web-services.vercel.app/genres')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const genreSelect = document.getElementById('id_genre');
+                        data.data.forEach(genre => {
+                            const option = document.createElement('option');
+                            option.value = genre.id_genre;
+                            option.textContent = genre.name;
+                            genreSelect.appendChild(option);
+                        });
+                    } else {
+                        console.error('Failed to fetch genres');
+                    }
+                })
+                .catch(error => console.error('Error fetching genres:', error));
+        });
+    </script>
+</body>
+
+</html>

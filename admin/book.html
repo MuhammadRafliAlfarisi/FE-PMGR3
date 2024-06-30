@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book</title>
+    <link rel="stylesheet" href="./../assets/style/admin.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <button class="sidebar-toggle"><i class="material-icons">menu</i></button>
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h3>Dashboard</h3>
+                <p id="user-login"></p>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="./dashboard.html"><i class="material-icons">dashboard</i> Dashboard</a></li>
+                <li><a href="./book.html" class="active"><i class="material-icons">book</i> Book</a></li>
+                <li><a href="./genre.html"><i class="material-icons">movie</i> Genre </a></li>
+                <li><a href="#" id="logoutButton"><i class="material-icons">logout</i> Logout</a></li>
+            </ul>
+        </nav>
+        <div class="main-content">
+            <nav class="navbar">
+                <h2>Category Management</h2>
+                <div class="navbar-right">
+                    <a href="#" class="profile"><i class="material-icons">account_circle</i> User</a>
+                </div>
+            </nav>
+            <div class="content">
+                <table class="category-table" id="category-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Title</th>
+                            <th>Genre</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dynamic content will be injected here -->
+                    </tbody>
+                </table>
+                <button class="add-category-btn" onclick="window.location.href='./add-book.html'">Add Book</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="./../assets/js/book.js"></script>
+</body>
+
+</html>
