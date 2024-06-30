@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const result = await response.json();
         if (result.success) {
           alert(result.message);
-          window.location.href = "/index.html";
+          window.location.href = "FE-PMGR3/index.html";
         } else {
           alert("Logout failed");
         }
